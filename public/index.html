@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mainApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtHicksDEV Twilio Example</title>
+
+    <!--Jquery-->
+    <script src="https://kendo.cdn.telerik.com/2019.1.115/js/jquery.min.js"></script>
+    <!--Bootstrap 4.x-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!--Fontawesome KIT FREE [Add your own Kit]-->
+    <script src="https://kit.fontawesome.com/fb255f5925.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/es-us.js"></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+    <link href="bootstrap-reboot.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
+    <script>
+        var app = angular.module('mainApp', ["ngSanitize"]);
+    </script>
+
+</head>
+
+<body>
+    <div ng-controller="mainCtrl" id="mainCtrl" ng-cloak>
+
+        <div class="container-fluid" id="intro-form">
+            <div class="logo-container my-1 text-center">
+                <img src="/images/CodeCoffee.png" class='logo' />
+            </div>
+            <h1 class="h3 text-center">Join the <span class='text-danger'>ArtHicksDev</span> <br />Conference Room</h1>
+            <h5 class='text-center font-weight-normal'>Let's get started by provide a mobile number we can reach you.
+                You will
+                recieve a
+                confirmation for the
+                conference
+                room,
+                and we will attempt to dial you into the room.
+                </h4>
+                <p class='text-center'>
+                    <small>
+                        *We do not store your phone number for any further communications
+                    </small>
+                </p>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fas fa-user-astronaut"></i>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" ng-model="name" placeholder="Your Name" />
+
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fas fa-mobile"></i>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" ng-model="mobilephone" placeholder="Your Mobile Phone" />
+                    <script src="https://kit.fontawesome.com/d84e720f9f.js" crossorigin="anonymous"></script>
+                </div>
+
+                <button type="button" class="btn btn-block p-3" ng-class="{'
+                    btn-primary':sent!=true,'btn-success':sent==true}"" ng-click=" joincall()"
+                    ng-disabled="sending==true">
+                    <span ng-hide="sending==true || sent==true">Join Conversation</span>
+                    <span ng-show="sending==true"><i class="fas fa-spinner fa-spin"></i>&nbsp;Sending...</span>
+                    <span ng-show="sent==true">Sent!</span>
+
+                </button>
+
+        </div>
+        <script>
+            app.controller("mainCtrl", ["$scope", "$http", function ($scope, $http) {
+                $scope.name = "";
+                $scope.mobilephone = "";
+                $scope.sent = false;
+                $scope.sending = false;
+
+                $scope.joincall = () => {
+                    $scope.sending = true;
+                    var payload = {
+                        name: $scope.name,
+                        mobilephone: $scope.mobilephone
+
+                    }
+                    $http.post("/api/v1/join", JSON.stringify(payload)).then(res => {
+                        $scope.sending = false;
+
+                        $scope.sent = true;
+                        $scope.name = "";
+                        $scope.mobilephone = "";
+                        setTimeout(() => {
+                            $scope.sent = false;
+                            $scope.$apply();
+                        }, 4000);
+
+                    })
+
+                }
+
+
+            }])
+        </script>
+
+
+    </div>
+</body>
+
+</html>

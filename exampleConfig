@@ -1,0 +1,6 @@
+PORT=8080
+number=[Your Twilio Number]
+accountSid=[Twilio Account ID]
+authToken=[Twilio Auth Token]
+roomname=[Name of Default Room]
+incomingvoiceurl=[Your Application End Point ("[https://www.exmple.com]/incoming/voice")]
