@@ -7,9 +7,11 @@ The .env file has been ignored as of course, so listed below are a few of your r
 
 Enjoy!
 ~ArtHicksDev
+@arthicksdev (twitter)
+E: arthicksdev@gmail.com
 
+##.env File Configuration
 
-###.env File Configuration
 PORT=8080
 number=[Your Twilio Number]
 accountSid=[Twilio Account ID]
